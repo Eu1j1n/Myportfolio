@@ -15,14 +15,14 @@ html {
 
 .container {
   display: flex;
-  flex-direction: column; /* 수직 정렬 */
+  flex-direction: column;
   height: 200vh;
   width: 100vw;
 }
 
 .first-section {
   display: flex;
-  flex: 1; /* 첫 번째 섹션은 화면의 절반 */
+  flex: 1;
   width: 100%;
 }
 
@@ -44,6 +44,26 @@ html {
   align-items: center;
   height: 100%;
   padding-top: 5%;
+}
+
+.svg-container {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: auto;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-10px);
+  }
 }
 .portfolio-title {
   font-family: "CWDangamAsac-Bold", sans-serif;
@@ -132,4 +152,35 @@ html {
 .about-section p {
   font-size: 1.5rem;
   color: #fff8e1;
+}
+
+.highlight {
+  text-decoration: underline;
+  color: rgba(211, 211, 211, 0.794);
+  transition: color 0.3s ease;
+}
+
+.highlight:hover {
+  color: white;
+}
+
+.gif-container {
+  position: absolute;
+  top: 100%;
+  left: 15%;
+  transform: translate(-50%, 0);
+  z-index: 10;
+}
+
+.cursor-arrow {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 10px solid black;
+  position: absolute;
+  pointer-events: none;
+  z-index: 1000;
+  transition: opacity 0.2s ease;
+  opacity: 0;
 }

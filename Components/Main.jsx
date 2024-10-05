@@ -2,16 +2,37 @@ import { useEffect, useRef, useState } from "react";
 import "../Style/Main.css";
 import { gsap } from "gsap";
 
+import smileGif from "../Assets/smile.gif";
+import fireGif from "../Assets/fire.gif";
+
 function Main() {
   const textRefs = useRef([]);
   const followerRef = useRef(null);
   const texts = ["EUIJIN", "PORTFOLIO!!"];
   const [isTyping, setIsTyping] = useState(false);
-  const [isVisible, setIsVisible] = useState([false, false]); // Overview와 About 텍스트 가시성을 위한 상태
+  const [isVisible, setIsVisible] = useState([false, false]);
+  const [showFireGif, setShowFireGif] = useState(false);
+  const [showSmileGif, setShowSmileGif] = useState(false);
+  const [isOverviewVisible, setIsOverviewVisible] = useState(true);
+
+  const secondSectionRef = useRef(null);
+  const scrollToSecondSection = () => {
+    console.log("SVG clicked!"); // 로그 추가
+    if (secondSectionRef.current) {
+      console.log("Second Section Ref:", secondSectionRef.current);
+      const sectionPosition =
+        secondSectionRef.current.getBoundingClientRect().top + window.scrollY;
+      console.log("Section Position:", sectionPosition);
+      window.scrollTo({ top: sectionPosition, behavior: "smooth" });
+    } else {
+      console.log("Second section reference is null.");
+    }
+  };
 
   useEffect(() => {
     const handleMouseMove = (event) => {
       document.querySelectorAll(".eye").forEach((eye) => {
+        console.log("Cursor Y Position:", event.clientY);
         const rect = eye.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
@@ -29,9 +50,9 @@ function Main() {
       }
     };
 
-    document.addEventListener("mousemove", handleMouseMove); // 여기에서 document에 추가
+    document.addEventListener("mousemove", handleMouseMove);
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove); // 제거 시에도 document에서 제거
+      document.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
@@ -83,7 +104,7 @@ function Main() {
   const typeText = () => {
     const overviewText = ["Overview", "Write about yourself here..."];
     overviewText.forEach((text, index) => {
-      const ref = textRefs.current[index + texts.length]; // Adjust index to target overview texts
+      const ref = textRefs.current[index + texts.length];
       const letters = text.split("");
 
       ref.innerHTML = ""; // Clear previous content
@@ -107,19 +128,18 @@ function Main() {
     });
   };
 
-  // Intersection Observer API 사용하여 두 번째 섹션의 가시성 감지
   useEffect(() => {
     const options = {
-      root: null, // viewport
+      root: null,
       rootMargin: "0px",
-      threshold: 0.5, // 50% 이상 보일 때 트리거
+      threshold: 0.5,
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setIsVisible([true, true]); // 두 번째 섹션의 텍스트를 보이게 설정
-          observer.unobserve(entry.target); // 한 번만 실행
+          setIsVisible([true, true]);
+          observer.unobserve(entry.target);
         }
       });
     }, options);
@@ -130,21 +150,41 @@ function Main() {
     }
 
     const resetVisibility = () => {
-      setIsVisible([false, false]); // 가시성 상태를 초기화
+      setIsVisible([false, false]);
       if (secondSection) {
-        observer.observe(secondSection); // 다시 관찰
+        observer.observe(secondSection);
       }
     };
 
-    window.addEventListener("scroll", resetVisibility); // 스크롤할 때마다 가시성 초기화
+    window.addEventListener("scroll", resetVisibility);
 
     return () => {
       if (secondSection) {
         observer.unobserve(secondSection);
       }
-      window.removeEventListener("scroll", resetVisibility); // 이벤트 리스너 제거
+      window.removeEventListener("scroll", resetVisibility);
     };
   }, []);
+
+  const handleMouseEnterFire = () => {
+    setShowFireGif(true);
+    setIsOverviewVisible(false);
+  };
+
+  const handleMouseLeaveFire = () => {
+    setShowFireGif(false);
+    setIsOverviewVisible(true);
+  };
+
+  const handleMouseEnterSmile = () => {
+    setShowSmileGif(true);
+    setIsOverviewVisible(false);
+  };
+
+  const handleMouseLeaveSmile = () => {
+    setShowSmileGif(false);
+    setIsOverviewVisible(true);
+  };
 
   return (
     <div className="container">
@@ -165,20 +205,59 @@ function Main() {
             ></h1>
           ))}
         </div>
+
+        <div className="svg-container" onClick={scrollToSecondSection}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 200"
+            width="200"
+            height="200"
+            preserveAspectRatio="xMidYMid meet"
+            style={{
+              width: "100%",
+              height: "100%",
+              transform: "translate3d(0px, 0px, 0px)",
+            }}
+          >
+            <defs>
+              <clipPath id="__lottie_element_157">
+                <rect width="200" height="200" x="0" y="0"></rect>
+              </clipPath>
+            </defs>
+            <g clipPath="url(#__lottie_element_157)">
+              <g
+                transform="matrix(0.2658953368663788,0,0,0.2658953368663788,24.618675231933594,55.587215423583984)"
+                opacity="0.06632173913046921"
+                style={{ display: "block" }}
+              >
+                <path
+                  fill="rgb(20,23,37)"
+                  fillOpacity="1"
+                  d=" M283.4639892578125,274.375 C273.343994140625,274.375 263.2250061035156,272.17498779296875 253.79800415039062,267.7760009765625 C253.79800415039062,267.7760009765625 16.750999450683594,157.16299438476562 16.750999450683594,157.16299438476562 C4.238999843597412,151.32400512695312 -1.1710000038146973,136.447998046875 4.668000221252441,123.93599700927734 C10.505999565124512,111.42400360107422 25.381999969482422,106.01499938964844 37.89400100708008,111.85399627685547 C37.89400100708008,111.85399627685547 274.9410095214844,222.46600341796875 274.9410095214844,222.46600341796875 C280.3580017089844,224.9929962158203 286.5710144042969,224.99200439453125 291.98699951171875,222.46600341796875 C291.98699951171875,222.46600341796875 529.0349731445312,111.85399627685547 529.0349731445312,111.85399627685547 C541.5469970703125,106.01399993896484 556.4219970703125,111.42400360107422 562.260986328125,123.93599700927734 C568.0989990234375,136.447998046875 562.6890258789062,151.32400512695312 550.177001953125,157.16299438476562 C550.177001953125,157.16299438476562 313.1300048828125,267.7760009765625 313.1300048828125,267.7760009765625 C303.7040100097656,272.17498779296875 293.5840148925781,274.375 283.4639892578125,274.375z"
+                ></path>
+              </g>
+            </g>
+          </svg>
+        </div>
       </div>
       <div className="mouse-follower" ref={followerRef}></div>
       {/* 두 번째 섹션 */}
-      <div className="second-section">
+      <div className="second-section" ref={secondSectionRef}>
         <div className="overview-section">
           <h1
             ref={(el) => (textRefs.current[2] = el)}
             style={{
-              opacity: isVisible[0] ? 1 : 0,
+              opacity: isOverviewVisible && isVisible[0] ? 1 : 0,
               transition: "opacity 0.5s ease",
             }}
           >
             Overview
           </h1>
+          {showFireGif && (
+            <div className="gif-container">
+              <img src={fireGif} alt="Fire Animation" />
+            </div>
+          )}
         </div>
         <div className="about-section">
           <p
@@ -188,14 +267,36 @@ function Main() {
               transition: "opacity 0.5s ease",
             }}
           >
-            안녕하세요! 저는 프론트엔드 개발자로서 다양한 프로젝트에 도전하며
-            열정을 가지고 일하고 있습니다<br></br> 항상 활발하게 소통하며 팀과
-            협력하는 것을 중요하게 생각하고, 변화하는 기술 트렌드에 발맞춰
-            나가려고 노력합니다. 사용자 경험을 최우선으로 고려하며, 창의적인
-            해결책을 찾는 데 기쁨을 느낍니다. <br></br>제 포트폴리오는 이러한
-            가치들이 담겨 있습니다. 함께 더 나은 결과물을 만들어 나가고
-            싶습니다!
+            안녕하세요! 저는 프론트엔드 개발자로서 다양한 프로젝트에
+            도전하며&nbsp;
+            <span
+              className="highlight"
+              onMouseEnter={handleMouseEnterFire}
+              onMouseLeave={handleMouseLeaveFire}
+            >
+              열정
+            </span>
+            을 가지고 공부하고 있습니다
+            <br />
+            항상 활발하게 소통하며 팀과 협력하는 것을 중요하게 생각하고,
+            변화하는 기술 트렌드에 발맞춰 나가려고 노력합니다. 사용자 경험을
+            최우선으로 고려하며, 창의적인 해결책을 찾는 데{" "}
+            <span
+              className="highlight"
+              onMouseEnter={handleMouseEnterSmile}
+              onMouseLeave={handleMouseLeaveSmile}
+            >
+              기쁨
+            </span>
+            을 느낍니다.
+            <br />제 포트폴리오는 이러한 가치들이 담겨 있습니다. 함께 더 나은
+            결과물을 만들어 나가고 싶습니다!
           </p>
+          {showSmileGif && (
+            <div className="gif-container">
+              <img src={smileGif} alt="Smile Animation" />
+            </div>
+          )}
         </div>
       </div>
     </div>
