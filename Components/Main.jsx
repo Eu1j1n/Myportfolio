@@ -8,12 +8,15 @@ import fireGif from "../Assets/fire.gif";
 function Main() {
   const textRefs = useRef([]);
   const followerRef = useRef(null);
+
   const texts = ["EUIJIN", "PORTFOLIO!!"];
   const [isTyping, setIsTyping] = useState(false);
   const [isVisible, setIsVisible] = useState([false, false]);
   const [showFireGif, setShowFireGif] = useState(false);
   const [showSmileGif, setShowSmileGif] = useState(false);
   const [isOverviewVisible, setIsOverviewVisible] = useState(true);
+
+  const thirdSectionRef = useRef(null);
 
   const secondSectionRef = useRef(null);
   const scrollToSecondSection = () => {
@@ -102,12 +105,12 @@ function Main() {
   }, [isTyping]);
 
   const typeText = () => {
-    const overviewText = ["Overview", "Write about yourself here..."];
+    const overviewText = ["Overview"];
     overviewText.forEach((text, index) => {
       const ref = textRefs.current[index + texts.length];
       const letters = text.split("");
 
-      ref.innerHTML = ""; // Clear previous content
+      ref.innerHTML = "";
 
       letters.forEach((letter, letterIndex) => {
         const span = document.createElement("span");
@@ -227,11 +230,11 @@ function Main() {
             <g clipPath="url(#__lottie_element_157)">
               <g
                 transform="matrix(0.2658953368663788,0,0,0.2658953368663788,24.618675231933594,55.587215423583984)"
-                opacity="0.06632173913046921"
+                opacity="0.8"
                 style={{ display: "block" }}
               >
                 <path
-                  fill="rgb(20,23,37)"
+                  fill="#ffffff"
                   fillOpacity="1"
                   d=" M283.4639892578125,274.375 C273.343994140625,274.375 263.2250061035156,272.17498779296875 253.79800415039062,267.7760009765625 C253.79800415039062,267.7760009765625 16.750999450683594,157.16299438476562 16.750999450683594,157.16299438476562 C4.238999843597412,151.32400512695312 -1.1710000038146973,136.447998046875 4.668000221252441,123.93599700927734 C10.505999565124512,111.42400360107422 25.381999969482422,106.01499938964844 37.89400100708008,111.85399627685547 C37.89400100708008,111.85399627685547 274.9410095214844,222.46600341796875 274.9410095214844,222.46600341796875 C280.3580017089844,224.9929962158203 286.5710144042969,224.99200439453125 291.98699951171875,222.46600341796875 C291.98699951171875,222.46600341796875 529.0349731445312,111.85399627685547 529.0349731445312,111.85399627685547 C541.5469970703125,106.01399993896484 556.4219970703125,111.42400360107422 562.260986328125,123.93599700927734 C568.0989990234375,136.447998046875 562.6890258789062,151.32400512695312 550.177001953125,157.16299438476562 C550.177001953125,157.16299438476562 313.1300048828125,267.7760009765625 313.1300048828125,267.7760009765625 C303.7040100097656,272.17498779296875 293.5840148925781,274.375 283.4639892578125,274.375z"
                 ></path>
@@ -267,8 +270,10 @@ function Main() {
               transition: "opacity 0.5s ease",
             }}
           >
-            안녕하세요! 저는 프론트엔드 개발자로서 다양한 프로젝트에
-            도전하며&nbsp;
+            안녕하세요! 저는&nbsp;
+            <span className="highlight">프론트엔드 개발자</span>{" "}
+            {/* 클래스 이름으로 변경 */}
+            로서 다양한 프로젝트에 도전하며&nbsp;
             <span
               className="highlight"
               onMouseEnter={handleMouseEnterFire}
@@ -297,6 +302,29 @@ function Main() {
               <img src={smileGif} alt="Smile Animation" />
             </div>
           )}
+        </div>
+      </div>
+
+      <div className="third-section" ref={thirdSectionRef}>
+        <h1>저에 대해 더 알고 </h1>
+        <div className="circle-container">
+          <span className="circle-text">싶으신가요?</span>
+          <svg
+            className="circle_point"
+            viewBox="0 0 416 178"
+            width="422"
+            height="180"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              className="circle_point_path active_dash"
+              d="M410.253 113.699c-111.805 25.438-395.886 73.056-407.44-21.27-9.3-75.975 173.292-85.082 189.343-87.243 16.05-2.16 214.059-18.105 221.119 39.5C423.872 131.172 189.5 163.5 137.5 176"
+              stroke="#121111"
+              strokeWidth="3"
+              strokeMiterlimit="10"
+            ></path>
+          </svg>
         </div>
       </div>
     </div>
