@@ -24,7 +24,7 @@ html {
 
 .first-section {
   display: flex;
-  flex: 7;
+  flex: 10;
   width: 100%;
 }
 
@@ -50,7 +50,7 @@ html {
 
 .svg-container {
   position: absolute;
-  top: 90%;
+  top: 95%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
@@ -168,7 +168,7 @@ html {
 
 .gif-container {
   position: absolute;
-  top: 120%;
+  top: 100%;
   left: 15%;
   transform: translate(-50%, 0);
   z-index: 10;
@@ -254,6 +254,7 @@ html {
   text-align: center;
   margin: 6% 0;
   flex: auto;
+  min-height: 100vh; /* 화면을 꽉 채우도록 설정 */
 
   background-color: black;
 }
