@@ -9,11 +9,13 @@ import euijinImage from "../Assets/euijin.png";
 function Main() {
   const textRefs = useRef([]);
   const followerRef = useRef(null);
+  const projectTextRef = useRef(null);
 
   const thirdTextRef = useRef(null);
   const thirdImageRef = useRef(null);
   const thirdSectionRef = useRef(null);
   const circleTextRef = useRef(null);
+  const fourthSectionRef = useRef(null); // 네 번째 섹션에 대한 ref 설정
 
   const texts = ["EUIJIN", "PORTFOLIO!!"];
   const [isTyping, setIsTyping] = useState(false);
@@ -35,6 +37,34 @@ function Main() {
       console.log("Second section reference is null.");
     }
   };
+
+  useEffect(() => {
+    // 4반쩨섹션 애니메이션 효과
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            gsap.fromTo(
+              projectTextRef.current,
+              { x: -300, opacity: 0 }, // 시작
+              { x: 0, opacity: 1, duration: 1, ease: "power3.out" } // 끝
+            );
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if (fourthSectionRef.current) {
+      observer.observe(fourthSectionRef.current);
+    }
+
+    return () => {
+      if (fourthSectionRef.current) {
+        observer.unobserve(fourthSectionRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (event) => {
@@ -68,33 +98,34 @@ function Main() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            // 세 번째 섹션이 화면에 들어오면 애니메이션 실행
             gsap.fromTo(
               thirdTextRef.current,
-              { opacity: 0, y: 50 },
+              { opacity: 0, y: 50 }, // 시작 상태
               {
                 opacity: 1,
-                y: 0,
+                y: 0, // 끝 상태
                 duration: 1,
                 ease: "power2.out",
-                delay: 0.5,
+                delay: 0.5, // 약간의 지연
               }
             );
 
             gsap.fromTo(
               circleTextRef.current,
-              { opacity: 0, scale: 0.8 },
+              { opacity: 0, scale: 0.8 }, // 시작 상태
               {
                 opacity: 1,
-                scale: 1,
+                scale: 1, // 끝 상태
                 duration: 1,
                 ease: "power2.out",
-                delay: 0.5,
+                delay: 0.5, // 약간의 지연
               }
             );
 
             gsap.fromTo(
               thirdImageRef.current,
-              { opacity: 0, scale: 0.8 },
+              { opacity: 0, scale: 0.8 }, // 시작 상태
               {
                 opacity: 1,
                 scale: 1, // 끝 상태
@@ -104,22 +135,19 @@ function Main() {
               }
             );
 
-            // "Yes!" 애니메이션
-            gsap.fromTo(
-              ".yes-text",
-              { opacity: 0, y: 20 },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power2.out",
-                delay: 1.5,
-              }
-            );
+            // SVG 경로 애니메이션 다시 시작
+            const path =
+              thirdSectionRef.current.querySelector(".circle_point_path");
+            path.style.strokeDashoffset = "1000"; // 초기값으로 리셋
+            path.offsetHeight; // reflow를 발생시켜 애니메이션을 다시 시작
+            path.style.transition = "none"; // 애니메이션 중지
+            path.offsetHeight; // reflow를 발생시켜 애니메이션을 다시 시작
+            path.style.transition = "stroke-dashoffset 2s"; // 애니메이션 추가
+            path.style.strokeDashoffset = "0"; // 애니메이션 시작
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 } // 섹션의 50%가 보일 때 트리거
     );
 
     if (thirdSectionRef.current) {
@@ -177,6 +205,13 @@ function Main() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [isTyping]);
+
+  const scrollToFourthSection = () => {
+    // 네 번째 섹션으로 스크롤하는 함수
+    if (fourthSectionRef.current) {
+      fourthSectionRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const typeText = () => {
     const overviewText = ["Overview"];
@@ -410,9 +445,13 @@ function Main() {
             ref={thirdImageRef}
           />
         </div>
-        <div className="yes-container">
+        <div className="yes-container" onClick={scrollToFourthSection}>
           <span className="yes-text">Yes!</span>
         </div>
+      </div>
+
+      <div className="fourth-section" ref={fourthSectionRef}>
+        <h1 ref={projectTextRef}>Project</h1> {/* 텍스트에 ref 추가 */}
       </div>
     </div>
   );

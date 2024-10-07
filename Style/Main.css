@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap");
+
 @font-face {
   font-family: "CWDangamAsac-Bold";
   src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/CWDangamAsac-Bold.woff")
@@ -16,13 +18,13 @@ html {
 .container {
   display: flex;
   flex-direction: column;
-  height: 400vh;
+  height: 600vh;
   width: 100vw;
 }
 
 .first-section {
   display: flex;
-  flex: 6;
+  flex: 7;
   width: 100%;
 }
 
@@ -42,13 +44,13 @@ html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  margin-top: 30%;
+
+  margin-top: 115%;
 }
 
 .svg-container {
   position: absolute;
-  top: 105%;
+  top: 90%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
@@ -85,7 +87,7 @@ html {
   align-items: center;
   flex-direction: row;
   height: 100%;
-  margin-top: 140%;
+  margin-top: 240%;
 }
 
 .eye {
@@ -166,7 +168,7 @@ html {
 
 .gif-container {
   position: absolute;
-  top: 130%;
+  top: 120%;
   left: 15%;
   transform: translate(-50%, 0);
   z-index: 10;
@@ -174,7 +176,7 @@ html {
 
 .third-section {
   text-align: center;
-  flex: 1.5;
+  flex: 1.2;
   margin: 40px 0;
 }
 
@@ -228,4 +230,41 @@ html {
   font-size: 50px;
   animation: float 3s ease-in-out infinite;
   text-decoration: underline;
+}
+
+.circle_point_path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition: stroke-dashoffset 2s;
+}
+
+@keyframes draw {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.fourth-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 6% 0;
+  flex: auto;
+
+  background-color: black;
+}
+
+.fourth-section h1 {
+  font-size: 11vw;
+  letter-spacing: -0.01rem;
+  text-transform: uppercase;
+  color: #f9f9f9;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  color: white;
 }
