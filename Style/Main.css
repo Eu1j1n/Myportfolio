@@ -12,13 +12,16 @@ body,
 html {
   margin: 0;
   padding: 0;
+
   height: 100%;
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  height: 600vh;
+  background-color: black;
+  height: 700vh;
+
   width: 100vw;
 }
 
@@ -38,6 +41,7 @@ html {
 
 .right-section {
   width: 50%;
+  height: auto;
   background-color: #004d40;
   color: #fff8e1;
   display: flex;
@@ -45,12 +49,12 @@ html {
   justify-content: center;
   align-items: center;
 
-  margin-top: 115%;
+  margin-top: 135%;
 }
 
 .svg-container {
   position: absolute;
-  top: 95%;
+  top: 90%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
@@ -78,7 +82,7 @@ html {
   font-family: "CWDangamAsac-Bold", sans-serif;
   font-size: 80px;
   color: #a7ffeb;
-  margin-top: 20%;
+  margin-top: 10%;
 }
 
 .eyes {
@@ -87,7 +91,7 @@ html {
   align-items: center;
   flex-direction: row;
   height: 100%;
-  margin-top: 240%;
+  margin-top: 300%;
 }
 
 .eye {
@@ -124,7 +128,7 @@ html {
 .second-section {
   display: flex;
   width: 100%;
-  flex: 1.5;
+  flex: auto;
   background-color: #333;
   color: white;
 }
@@ -168,7 +172,7 @@ html {
 
 .gif-container {
   position: absolute;
-  top: 100%;
+  top: 115%;
   left: 15%;
   transform: translate(-50%, 0);
   z-index: 10;
@@ -176,8 +180,8 @@ html {
 
 .third-section {
   text-align: center;
-  flex: 1.2;
-  margin: 40px 0;
+  flex: auto;
+  background-color: white;
 }
 
 .circle-container {

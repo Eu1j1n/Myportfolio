@@ -9,7 +9,6 @@ import euijinImage from "../Assets/euijin.png";
 function Main() {
   const textRefs = useRef([]);
   const followerRef = useRef(null);
-  const projectTextRef = useRef(null);
 
   const thirdTextRef = useRef(null);
   const thirdImageRef = useRef(null);
@@ -37,34 +36,6 @@ function Main() {
       console.log("Second section reference is null.");
     }
   };
-
-  useEffect(() => {
-    // 4반쩨섹션 애니메이션 효과
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            gsap.fromTo(
-              projectTextRef.current,
-              { x: -300, opacity: 0 }, // 시작
-              { x: 0, opacity: 1, duration: 1, ease: "power3.out" } // 끝
-            );
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    if (fourthSectionRef.current) {
-      observer.observe(fourthSectionRef.current);
-    }
-
-    return () => {
-      if (fourthSectionRef.current) {
-        observer.unobserve(fourthSectionRef.current);
-      }
-    };
-  }, []);
 
   useEffect(() => {
     const handleMouseMove = (event) => {
@@ -451,7 +422,7 @@ function Main() {
       </div>
 
       <div className="fourth-section" ref={fourthSectionRef}>
-        <h1 ref={projectTextRef}>Project</h1> {/* 텍스트에 ref 추가 */}
+        <h1>Project</h1>
       </div>
     </div>
   );
