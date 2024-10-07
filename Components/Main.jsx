@@ -4,10 +4,16 @@ import { gsap } from "gsap";
 
 import smileGif from "../Assets/smile.gif";
 import fireGif from "../Assets/fire.gif";
+import euijinImage from "../Assets/euijin.png";
 
 function Main() {
   const textRefs = useRef([]);
   const followerRef = useRef(null);
+
+  const thirdTextRef = useRef(null);
+  const thirdImageRef = useRef(null);
+  const thirdSectionRef = useRef(null);
+  const circleTextRef = useRef(null);
 
   const texts = ["EUIJIN", "PORTFOLIO!!"];
   const [isTyping, setIsTyping] = useState(false);
@@ -16,11 +22,9 @@ function Main() {
   const [showSmileGif, setShowSmileGif] = useState(false);
   const [isOverviewVisible, setIsOverviewVisible] = useState(true);
 
-  const thirdSectionRef = useRef(null);
-
   const secondSectionRef = useRef(null);
   const scrollToSecondSection = () => {
-    console.log("SVG clicked!"); // 로그 추가
+    console.log("SVG clicked!");
     if (secondSectionRef.current) {
       console.log("Second Section Ref:", secondSectionRef.current);
       const sectionPosition =
@@ -56,6 +60,76 @@ function Main() {
     document.addEventListener("mousemove", handleMouseMove);
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            gsap.fromTo(
+              thirdTextRef.current,
+              { opacity: 0, y: 50 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out",
+                delay: 0.5,
+              }
+            );
+
+            gsap.fromTo(
+              circleTextRef.current,
+              { opacity: 0, scale: 0.8 },
+              {
+                opacity: 1,
+                scale: 1,
+                duration: 1,
+                ease: "power2.out",
+                delay: 0.5,
+              }
+            );
+
+            gsap.fromTo(
+              thirdImageRef.current,
+              { opacity: 0, scale: 0.8 },
+              {
+                opacity: 1,
+                scale: 1, // 끝 상태
+                duration: 1.5,
+                ease: "elastic.out(1, 0.3)",
+                delay: 1,
+              }
+            );
+
+            // "Yes!" 애니메이션
+            gsap.fromTo(
+              ".yes-text",
+              { opacity: 0, y: 20 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out",
+                delay: 1.5,
+              }
+            );
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if (thirdSectionRef.current) {
+      observer.observe(thirdSectionRef.current); // 세 번째 섹션을 감시
+    }
+
+    return () => {
+      if (thirdSectionRef.current) {
+        observer.unobserve(thirdSectionRef.current); // 컴포넌트가 언마운트될 때 감시 해제
+      }
     };
   }, []);
 
@@ -306,9 +380,11 @@ function Main() {
       </div>
 
       <div className="third-section" ref={thirdSectionRef}>
-        <h1>저에 대해 더 알고 </h1>
+        <h1 ref={thirdTextRef}>저에 대해 더 알고 </h1>
         <div className="circle-container">
-          <span className="circle-text">싶으신가요?</span>
+          <span className="circle-text" ref={circleTextRef}>
+            싶으신가요?
+          </span>
           <svg
             className="circle_point"
             viewBox="0 0 416 178"
@@ -325,6 +401,17 @@ function Main() {
               strokeMiterlimit="10"
             ></path>
           </svg>
+        </div>
+        <div className="image-container">
+          <img
+            src={euijinImage}
+            alt="Euijin"
+            className="euijin-image"
+            ref={thirdImageRef}
+          />
+        </div>
+        <div className="yes-container">
+          <span className="yes-text">Yes!</span>
         </div>
       </div>
     </div>
