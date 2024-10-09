@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import smileGif from "../Assets/smile.gif";
 import fireGif from "../Assets/fire.gif";
 import euijinImage from "../Assets/euijin.png";
+import { useNavigate } from "react-router-dom";
 
 function Main() {
   const textRefs = useRef([]);
@@ -14,7 +15,12 @@ function Main() {
   const thirdImageRef = useRef(null);
   const thirdSectionRef = useRef(null);
   const circleTextRef = useRef(null);
-  const fourthSectionRef = useRef(null); // 네 번째 섹션에 대한 ref 설정
+  const fourthSectionRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleProjectClick = () => {
+    navigate("/project");
+  };
 
   const texts = ["EUIJIN", "PORTFOLIO!!"];
   const [isTyping, setIsTyping] = useState(false);
@@ -422,7 +428,9 @@ function Main() {
       </div>
 
       <div className="fourth-section" ref={fourthSectionRef}>
-        <h1>Project</h1>
+        <h1 onClick={handleProjectClick} style={{ cursor: "pointer" }}>
+          Project
+        </h1>
       </div>
     </div>
   );
