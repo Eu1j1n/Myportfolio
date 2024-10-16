@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Main from "../Components/Main";
-import Project from "../Components/Project";
+import Main from "../src/Components/Main"; // 경로 수정
+import Project from "../src/Components/Project"; // 경로 수정
 
 function AppRouter() {
   return (
